@@ -1,4 +1,5 @@
 ﻿using System;
+using Core;
 
 namespace Snake
 {
@@ -6,6 +7,9 @@ namespace Snake
     {
         static void Main()
         {
+            var world = new World();
+
+            { }
         }
     }
 }

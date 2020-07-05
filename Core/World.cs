@@ -36,7 +36,7 @@ namespace Core
 
             Snake = Snake.WithMovement(direction);
 
-            if (Snake.isCollided)
+            if (Snake.isCollided(Size))
             {
                 throw new Exception("Game over");
             }

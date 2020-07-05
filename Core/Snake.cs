@@ -64,7 +64,17 @@ namespace Core
             return new Snake(newHeadToTail);
         }
 
-        public bool isCollided => hasDuplicate;
+        public bool isCollided(Coordinate size)
+        {
+            foreach (var block in HeadToTail)
+            {
+                if (block.X > size.X || block.Y > size.Y)
+                {
+                    return true;
+                }
+            }
+            return hasDuplicate;
+        }
 
         public bool hasDuplicate
         {
