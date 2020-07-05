@@ -28,6 +28,8 @@ namespace Core
 
         public Coordinate Head => HeadToTail[0];
 
+        public Coordinate Tail => HeadToTail.Last();
+
         public bool Equals(Snake other) => HeadToTail == other.HeadToTail;
 
         public override bool Equals(object obj) => obj is Snake snake && Equals(snake);
