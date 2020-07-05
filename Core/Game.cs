@@ -6,5 +6,8 @@ namespace Core
 {
     class Game
     {
+        private readonly World world;
+
+
     }
 }
