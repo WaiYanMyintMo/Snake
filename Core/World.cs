@@ -27,9 +27,20 @@ namespace Core
 
         public Coordinate Size { get; }
 
-        public Coordinate Apple { get; }
+        public Coordinate Apple { get; set; }
 
-        public Snake Snake { get; }
+        public Snake Snake { get; set; }
+        
+        public void Update(Direction direction)
+        {
 
+            Snake = Snake.WithMovement(direction);
+
+            if (Snake.isCollided)
+            {
+                throw new Exception("Game over");
+            }
+
+        }
     }
 }

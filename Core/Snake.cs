@@ -46,5 +46,41 @@ namespace Core
 
         public static IEnumerable<Coordinate> FromSnake(Snake snake) => snake.HeadToTail;
 
+        public Snake WithMovement(Direction direction) => WithMovement(Coordinate.ToCoordinate(direction));
+
+        public Snake WithMovement(Coordinate vector)
+        {
+            var headToTail = HeadToTail;
+            var snakeLength = headToTail.Count;
+
+            var newHeadToTail = new Coordinate[snakeLength];
+            newHeadToTail[0] = (Head.X + vector.X, Head.Y + vector.Y);
+
+            for (int i = 1; i < snakeLength; i++)
+            {
+                newHeadToTail[i] = headToTail[i - 1];
+            }
+
+            return new Snake(newHeadToTail);
+        }
+
+        public bool isCollided => hasDuplicate;
+
+        public bool hasDuplicate
+        {
+            get
+            {
+                var hashset = new HashSet<Coordinate>();
+                foreach (var block in HeadToTail)
+                {
+                    if (!hashset.Add(block))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
     }
 }

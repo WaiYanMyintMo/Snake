@@ -34,5 +34,17 @@ namespace Core
         public static implicit operator ValueTuple<int, int>(Coordinate c) => FromCoordinate(c);
 
         public static ValueTuple<int, int> FromCoordinate(Coordinate c) => (c.X, c.Y);
+
+        public static Coordinate ToCoordinate(Direction direction)
+        {
+            return direction switch
+            {
+                Direction.Up => (0, 1),
+                Direction.Down => (0, -1),
+                Direction.Left => (-1, 0),
+                Direction.Right => (1, 0),
+                _ => (0, 0)
+            };
+        }
     }
 }
