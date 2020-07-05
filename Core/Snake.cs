@@ -10,8 +10,19 @@ namespace Core
     {
         public Snake(IEnumerable<Coordinate> headToTail)
         {
+            var headToTailArray = headToTail.ToArray();
+
+            if (headToTailArray.Length < 1)
+            {
+                throw new FormatException($"{nameof(headToTail)} must be at least 1");
+            }
+
             HeadToTail = new ReadOnlyCollection<Coordinate>(headToTail.ToList());
         }
+
+        public static Snake FromWorldSize(Coordinate size) => new Snake(new Coordinate[] { (size.X / 2, size.Y / 2) });
+
+        public static Snake Default => new Snake(new Coordinate[] { (0, 0) });
 
         public ReadOnlyCollection<Coordinate> HeadToTail { get; }
 
