@@ -8,7 +8,7 @@ namespace Core
     public class World
     {
         private readonly Random rand = new Random();
-        public World() : this((50, 50))
+        public World() : this((50, 20))
         {
         }
 
@@ -27,7 +27,7 @@ namespace Core
             Snake = snake;
         }
 
-        public Coordinate Size { get; }
+        public Coordinate Size { get; set; }
 
         public Coordinate Apple { get; set; }
 
@@ -50,8 +50,18 @@ namespace Core
                 newHeadToTail.Add(tail);
                 Snake = new Snake(newHeadToTail);
 
-                int index = (int)(Size.X * Size.Y * rand.NextDouble());
-                var y = Math.DivRem(index, Size.Y, out int x);
+                var head = Snake.Head;
+
+                int xOffset = Size.X / 10;
+                int x = rand.Next(head.X - xOffset, head.X + xOffset);
+
+                int yOffset = Size.Y / 10;
+                int y = rand.Next(head.Y - yOffset, head.Y + yOffset);
+
+                if (x < 0) x = 0;
+                if (x >= Size.X) x = Size.X;
+                if (y < 0) y = 0;
+                if (y >= Size.Y) y = Size.Y;
 
                 Apple = new Coordinate(x, y);
 

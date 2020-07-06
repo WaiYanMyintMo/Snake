@@ -70,7 +70,7 @@ namespace Core
         {
             foreach (var block in HeadToTail)
             {
-                if (block.X > size.X || block.Y > size.Y)
+                if (block.X >= size.X || block.X < 0 || block.Y >= size.Y || block.Y < 0)
                 {
                     return true;
                 }
