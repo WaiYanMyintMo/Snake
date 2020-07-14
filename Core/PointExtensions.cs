@@ -15,9 +15,9 @@ namespace Core
             _ => (0, 0)
         };
 
-        public static Point WithX(this Point point, int x) => new Point(x, point.Y);
+        public static Point WithX(this Point point, int x) => new Point(x, point.X);
 
-        public static Point WithY(this Point point, int y) => new Point(y, point.X);
+        public static Point WithY(this Point point, int y) => new Point(point.X, y);
 
         public static Point Add(this Point point1, Point point2) => new Point(point1.X + point2.X, point1.Y + point2.Y);
 
