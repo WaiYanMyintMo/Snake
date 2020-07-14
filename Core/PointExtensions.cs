@@ -25,8 +25,8 @@ namespace Core
 
         public static Point EnsureWithin(this Point point, Point size)
             => point
-                .WithX(point.X.EnsureWithin(size.X))
-                .WithY(point.Y.EnsureWithin(size.Y));
+                .WithX(point.X.EnsuredWithin(size.X))
+                .WithY(point.Y.EnsuredWithin(size.Y));
 
         public static bool IsWithin(this Point point, Point size) 
             => point.X.IsWithin(size.X) && point.Y.IsWithin(size.Y);
