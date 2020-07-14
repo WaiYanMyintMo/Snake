@@ -12,24 +12,24 @@ namespace Core
         {
         }
 
-        public World(Coordinate size) : this(size, new Coordinate((size.X / 2) + 1, (size.Y / 2) + 1))
+        public World(Point size) : this(size, new Point((size.X / 2) + 1, (size.Y / 2) + 1))
         {
         }
 
-        public World(Coordinate size, Coordinate apple) : this(size, apple, Snake.FromWorldSize(size))
+        public World(Point size, Point apple) : this(size, apple, Snake.FromWorldSize(size))
         {
         }
 
-        public World(Coordinate size, Coordinate apple, Snake snake)
+        public World(Point size, Point apple, Snake snake)
         {
             Size = size;
             Apple = apple;
             Snake = snake;
         }
 
-        public Coordinate Size { get; set; }
+        public Point Size { get; set; }
 
-        public Coordinate Apple { get; set; }
+        public Point Apple { get; set; }
 
         public Snake Snake { get; set; }
         
@@ -63,7 +63,7 @@ namespace Core
                 if (y < 0) y = 0;
                 if (y >= Size.Y) y = Size.Y;
 
-                Apple = new Coordinate(x, y);
+                Apple = new Point(x, y);
 
             }
 

@@ -19,7 +19,7 @@ namespace Snake
 
         private readonly World world;
 
-        private readonly Coordinate size;
+        private readonly Point size;
 
         public static World InitializeConsole(World world)
         {

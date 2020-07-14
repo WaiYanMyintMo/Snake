@@ -8,7 +8,7 @@ namespace Core
 {
     public readonly struct Snake : IEquatable<Snake>
     {
-        public Snake(IEnumerable<Coordinate> headToTail)
+        public Snake(IEnumerable<Point> headToTail)
         {
             var headToTailArray = headToTail.ToArray();
 
@@ -17,18 +17,18 @@ namespace Core
                 throw new FormatException($"{nameof(headToTail)} must be at least 1");
             }
 
-            HeadToTail = new ReadOnlyCollection<Coordinate>(headToTail.ToList());
+            HeadToTail = new ReadOnlyCollection<Point>(headToTail.ToList());
         }
 
-        public static Snake FromWorldSize(Coordinate size) => new Snake(new Coordinate[] { (size.X / 2, size.Y / 2) });
+        public static Snake FromWorldSize(Point size) => new Snake(new Point[] { (size.X / 2, size.Y / 2) });
 
-        public static Snake Default => new Snake(new Coordinate[] { (0, 0) });
+        public static Snake Default => new Snake(new Point[] { (0, 0) });
 
-        public ReadOnlyCollection<Coordinate> HeadToTail { get; }
+        public ReadOnlyCollection<Point> HeadToTail { get; }
 
-        public Coordinate Head => HeadToTail[0];
+        public Point Head => HeadToTail[0];
 
-        public Coordinate Tail => HeadToTail.Last();
+        public Point Tail => HeadToTail.Last();
 
         public bool Equals(Snake other) => HeadToTail == other.HeadToTail;
 
@@ -40,22 +40,22 @@ namespace Core
 
         public static bool operator !=(Snake one, Snake other) => !one.Equals(other);
 
-        public static implicit operator Snake(Coordinate[] coordinates) => ToSnake(coordinates);
+        public static implicit operator Snake(Point[] coordinates) => ToSnake(coordinates);
 
-        public static Snake ToSnake(IEnumerable<Coordinate> coordinates) => new Snake(coordinates);
+        public static Snake ToSnake(IEnumerable<Point> coordinates) => new Snake(coordinates);
 
-        public static implicit operator Coordinate[](Snake snake) => FromSnake(snake).ToArray();
+        public static implicit operator Point[](Snake snake) => FromSnake(snake).ToArray();
 
-        public static IEnumerable<Coordinate> FromSnake(Snake snake) => snake.HeadToTail;
+        public static IEnumerable<Point> FromSnake(Snake snake) => snake.HeadToTail;
 
-        public Snake WithMovement(Direction direction) => WithMovement(Coordinate.ToCoordinate(direction));
+        public Snake WithMovement(Direction direction) => WithMovement(Point.ToCoordinate(direction));
 
-        public Snake WithMovement(Coordinate vector)
+        public Snake WithMovement(Point vector)
         {
             var headToTail = HeadToTail;
             var snakeLength = headToTail.Count;
 
-            var newHeadToTail = new Coordinate[snakeLength];
+            var newHeadToTail = new Point[snakeLength];
             newHeadToTail[0] = (Head.X + vector.X, Head.Y + vector.Y);
 
             for (int i = 1; i < snakeLength; i++)
@@ -66,7 +66,7 @@ namespace Core
             return new Snake(newHeadToTail);
         }
 
-        public bool isCollided(Coordinate size)
+        public bool isCollided(Point size)
         {
             foreach (var block in HeadToTail)
             {
@@ -82,7 +82,7 @@ namespace Core
         {
             get
             {
-                var hashset = new HashSet<Coordinate>();
+                var hashset = new HashSet<Point>();
                 foreach (var block in HeadToTail)
                 {
                     if (!hashset.Add(block))
