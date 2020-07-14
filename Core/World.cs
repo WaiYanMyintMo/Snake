@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Core
 {
@@ -12,45 +11,49 @@ namespace Core
         {
         }
 
-        public World(Point size) : this(size, new Point((size.X / 2) + 1, (size.Y / 2) + 1))
-        {
-        }
-
-        public World(Point size, Point apple) : this(size, apple, Snake.FromWorldSize(size))
-        {
-        }
-
-        public World(Point size, Point apple, Snake snake)
+        public World(Point size)
         {
             Size = size;
-            Apple = apple;
-            Snake = snake;
+
+            var center = size.GetCenter().EnsureWithin(size);
+
+            Apple = new Point(center.X + 1, center.Y + 1).EnsureWithin(size);
+
+            Snake = new List<Point>() { center };
         }
 
-        public Point Size { get; set; }
+        public World(Point size, Point apple, List<Point> snake)
+        {
+            Size = size;
+            Apple = apple.EnsureWithin(size);
+            Snake = snake.EnsureWithin(size);
+        }
 
-        public Point Apple { get; set; }
+        public Point Size { get; }
 
-        public Snake Snake { get; set; }
+        public Point Apple { get; }
+
+        public List<Point> Snake { get; }
         
         public void Update(Direction direction)
         {
-            var tail = Snake.Tail;
+            var tailEnd = Snake.GetTailEnd();
 
-            Snake = Snake.WithMovement(direction);
+            Snake.Move(direction);
 
-            if (Snake.isCollided(Size))
+            if (Snake.IsInvalidState(Size))
             {
                 throw new Exception("Game over");
             }
 
-            if (Snake.Head == Apple)
+            if (Snake.GetHead() == Apple)
             {
-                var newHeadToTail = Snake.HeadToTail.ToList();
-                newHeadToTail.Add(tail);
-                Snake = new Snake(newHeadToTail);
+                Snake.Add(tailEnd);
 
-                var head = Snake.Head;
+
+                // New Apple is somewhere near 
+
+                var head = Snake.GetHead();
 
                 int xOffset = Size.X / 10;
                 int x = rand.Next(head.X - xOffset, head.X + xOffset);
@@ -58,10 +61,9 @@ namespace Core
                 int yOffset = Size.Y / 10;
                 int y = rand.Next(head.Y - yOffset, head.Y + yOffset);
 
-                if (x < 0) x = 0;
-                if (x >= Size.X) x = Size.X;
-                if (y < 0) y = 0;
-                if (y >= Size.Y) y = Size.Y;
+                x.EnsureWithin(Size.X);
+
+                y.EnsureWithin(Size.Y);
 
                 Apple = new Point(x, y);
 

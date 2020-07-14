@@ -15,6 +15,7 @@ namespace Snake
             world = world_;
             size = world.Size;
             sb = new StringBuilder(size.X * size.Y);
+            buffer = GetEmptyBuffer(size);
         }
 
         private readonly World world;
@@ -33,10 +34,7 @@ namespace Snake
 
             if (width > LargestWindowWidth || height > LargestWindowHeight)
             {
-                width = LargestWindowWidth;
-                height = LargestWindowHeight;
-
-                world.Size = (width, height);
+                throw new Exception("World size too large to render");
             }
 
             if (height > WindowHeight) 
@@ -47,44 +45,65 @@ namespace Snake
             return world;
         }
 
-        private char[,] EmptyCharArrayArray
+        private static char[][] GetEmptyBuffer(Point size)
         {
-            get
+            var buffer = new char[size.Y][];
+            EmptyBuffer(buffer, size.X);
+            return buffer;
+        }
+
+        private static void EmptyBuffer(char[][] buffer, int xLength)
+        {
+            for (int y = 0; y < buffer.Length; y++)
             {
-                var array = new char[size.Y, size.X];
-                for (int i = 0; i < size.Y; i++)
+                buffer[y] = new char[xLength];
+                for (int x = 0; x < xLength; x++)
                 {
-                    for (int j = 0; j < size.X; j++)
-                    {
-                        array[i, j] = ' ';
-                    }
+                    buffer[y][x] = ' ';
                 }
-                return array;
+            }
+        }
+
+        private static void EmptyBuffer(char[][] buffer)
+        {
+            if (buffer.Length > 0)
+            {
+                EmptyBuffer(buffer, buffer[0].Length);
             }
         }
 
         private readonly StringBuilder sb;
 
+        private readonly char[][] buffer;
+
+        private char[][] PrepareBuffer()
+        {
+            EmptyBuffer(buffer);
+
+            var apple = world.Apple;
+            buffer[apple.Y][apple.X] = 'a';
+
+            var snake = world.Snake;
+
+            var head = snake.GetHead();
+
+            buffer[head.Y][head.X] = 'H';
+
+            var bodyToTailEnd = snake.GetRange(1, snake.Count - 1);
+
+            foreach (var body in bodyToTailEnd)
+            {
+                buffer[body.Y][body.X] = 'S';
+            }
+
+            return buffer;
+        }
+
         public void draw()
         {
             sb.Clear();
 
-            var buffer = EmptyCharArrayArray;
-
-            buffer[world.Apple.Y, world.Apple.X] = 'a';
-
-            var snake = world.Snake;
-            var head = snake.Head;
-
-            buffer[head.Y, head.X] = 'H';
-
-            var headToTail = snake.HeadToTail;
-            var length = headToTail.Count;
-            for (int i = 1; i < length; i++)
-            {
-                var body = headToTail[i];
-                buffer[body.Y, body.X] = 'S';
-            }
+            var buffer = prepareBuffer();
 
             for (int i = 0; i < size.Y; i++)
             {
