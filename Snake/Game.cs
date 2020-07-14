@@ -28,7 +28,7 @@ namespace Snake
             while (true)
             {
                 world.RandomUpdate(rand);
-                render.draw();
+                render.Draw();
                 Thread.Sleep(50);
             }
         }

@@ -9,20 +9,22 @@ namespace Snake
 {
     class Render
     {
-        public Render(ref World world_)
+        public Render(ref World world)
         {
-            world_ = InitializeConsole(world_);
-            world = world_;
-            size = world.Size;
+            this.world = world;
+            size = this.world.Size;
+
             sb = new StringBuilder(size.X * size.Y);
             buffer = GetEmptyBuffer(size);
+
+            InitializeConsole(world);
         }
 
         private readonly World world;
 
         private readonly Point size;
 
-        public static World InitializeConsole(World world)
+        public static void InitializeConsole(World world)
         {
             Title = "Snake";
             CursorVisible = false;
@@ -37,12 +39,8 @@ namespace Snake
                 throw new Exception("World size too large to render");
             }
 
-            if (height > WindowHeight) 
-                SetWindowSize(WindowWidth, height);
-            if (width > WindowWidth) 
-                SetWindowSize(width, WindowHeight);
-
-            return world;
+            SetWindowSize(WindowWidth, height);
+            SetWindowSize(width, WindowHeight);
         }
 
         private static char[][] GetEmptyBuffer(Point size)
@@ -76,7 +74,7 @@ namespace Snake
 
         private readonly char[][] buffer;
 
-        private char[][] PrepareBuffer()
+        private void PrepareBuffer()
         {
             EmptyBuffer(buffer);
 
@@ -86,33 +84,33 @@ namespace Snake
             var snake = world.Snake;
 
             var head = snake.GetHead();
-
             buffer[head.Y][head.X] = 'H';
 
             var bodyToTailEnd = snake.GetRange(1, snake.Count - 1);
-
             foreach (var body in bodyToTailEnd)
             {
                 buffer[body.Y][body.X] = 'S';
             }
-
-            return buffer;
         }
 
-        public void draw()
+        private void PrepareStringBuilderFromBuffer()
         {
             sb.Clear();
-
-            var buffer = prepareBuffer();
 
             for (int i = 0; i < size.Y; i++)
             {
                 for (int j = 0; j < size.X; j++)
                 {
-                    sb.Append(buffer[i,j]);
+                    sb.Append(buffer[i][j]);
                 }
                 sb.Append(Environment.NewLine);
             }
+        }
+
+        public void Draw()
+        {
+            PrepareBuffer();
+            PrepareStringBuilderFromBuffer();
 
             SetCursorPosition(0, 0);
             Write(sb);
