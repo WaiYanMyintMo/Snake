@@ -14,7 +14,7 @@ namespace Snake
         {
             var world = new World();
 
-            var render = new Render(ref world);
+            var render = new Render(world);
 
         }
 
@@ -22,9 +22,9 @@ namespace Snake
         {
             var world = new World();
 
-            var render = new Render(ref world);
+            var render = new Render(world);
 
-            var rand = new Random(152);
+            var rand = new Random(15205);
             while (true)
             {
                 world.RandomUpdate(rand);

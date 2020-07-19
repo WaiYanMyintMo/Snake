@@ -9,7 +9,7 @@ namespace Snake
 {
     class Render
     {
-        public Render(ref World world)
+        public Render(World world)
         {
             this.world = world;
             size = this.world.Size;
@@ -99,10 +99,7 @@ namespace Snake
 
             for (int i = 0; i < size.Y; i++)
             {
-                for (int j = 0; j < size.X; j++)
-                {
-                    sb.Append(buffer[i][j]);
-                }
+                sb.Append(buffer[i]);
                 sb.Append(Environment.NewLine);
             }
         }
