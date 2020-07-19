@@ -19,17 +19,17 @@ namespace Snake
             render = new Render(world);
         }
 
-        private World world;
+        private readonly World world;
 
-        private Render render;
+        private readonly Render render;
 
-        public Direction NextDirection { get; set; }
+        private Direction currentDirection;
 
         const int MILLISECOND_PER_UPDATE = 250;
 
         public void Start()
         {
-            NextDirection = Input.ForceGetDirection();
+            currentDirection = Input.ForceGetDirection();
 
             while (true)
             {
@@ -42,10 +42,15 @@ namespace Snake
                 {
                     if (Console.KeyAvailable)
                     {
-                        var direction = Input.GetDirection();
-                        if (!(direction is null))
+                        var nullableDirection = Input.GetDirection();
+                        if (!(nullableDirection is null))
                         {
-                            NextDirection = (Direction)direction;
+                            var direction = (Direction)nullableDirection;
+                            // So that you don't turn backwards
+                            if (direction.Opposite() != currentDirection)
+                            {
+                                currentDirection = direction;
+                            }
                         }
                     }
                 }
@@ -63,7 +68,7 @@ namespace Snake
 
         private void UpdateAndDraw()
         {
-            world.Update(NextDirection);
+            world.Update(currentDirection);
             render.Draw();
         }
     }
