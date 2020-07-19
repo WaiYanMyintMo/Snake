@@ -13,9 +13,8 @@ namespace Snake
         public static void Run()
         {
             var world = new World();
-
-            var render = new Render(world);
-
+            var gameLoop = new GameLoop(world);
+            gameLoop.Start();
         }
 
         public static void RunRandom()

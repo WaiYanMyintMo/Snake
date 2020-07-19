@@ -7,7 +7,7 @@ namespace Snake
     {
         static void Main()
         {
-            Game.RunRandom();
+            Game.Run();
         }
 
     }
