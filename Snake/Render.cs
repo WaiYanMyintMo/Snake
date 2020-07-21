@@ -139,10 +139,10 @@ namespace Snake
             sb.Append($" Your score was {world.Snake.Count}. ");
 
             SetWindowSize(WindowWidth, (WindowHeight + 2).EnsuredWithin(LargestWindowHeight));
-            SetCursorPosition((center.X - (sb.Length / 2)).EnsuredWithin(), WindowHeight - 1);
+            SetCursorPosition((center.X - (sb.Length / 2)).EnsuredWithin(), WindowHeight - 2);
             Write(sb);
 
-            SetCursorPosition(0, WindowHeight);
+            SetCursorPosition(0, WindowHeight - 1);
             Write("Press enter to exit...");
             ReadLine();
         }

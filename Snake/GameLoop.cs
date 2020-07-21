@@ -38,7 +38,7 @@ namespace Snake
 
             while (worldState is WorldState.Running)
             {
-                render.Draw();
+                Task.Run(() => render.Draw());
                 // Starts a task that waits for some time
                 var waitTask = Task.Run(() => Task.Delay(millisecondsPerUpdate));
 
@@ -65,13 +65,13 @@ namespace Snake
 
                 currentDirection = newDirection;
                 worldState = world.Update(currentDirection);
-
-                try
-                {
-                    render.Draw();
-                }
-                catch(IndexOutOfRangeException) { }
             }
+
+            try
+            {
+                render.Draw();
+            }
+            catch (IndexOutOfRangeException) { }
 
             render.DisplayGameEnd(worldState);
         }

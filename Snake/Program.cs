@@ -13,7 +13,7 @@ namespace Snake
             }
             else
             {
-                Game.Run(250);
+                Game.Run(150);
             }
         }
 
