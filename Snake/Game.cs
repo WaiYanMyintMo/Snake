@@ -35,8 +35,15 @@ namespace Snake
         public static Direction RandomDirection(Random rand)
         {
             Contract.Requires(!(rand is null));
-            double rng = rand.NextDouble();
-            return rng >= 0.75 ? Up : rng >= 0.5 ? Down : rng >= 0.25 ? Left : Right;
+            return rand.NextDouble() switch
+            {
+                // replace with relational patterns
+                var x when x >= 0.75 => Left,
+                var x when x >= 0.50 => Up,
+                var x when x >= 0.25 => Down,
+                var x when x >= 0.00 => Right,
+                var x => throw new Exception($"{nameof(rand.NextDouble)}'s value {x} should be >= 0.0 and < 1.0"),
+            };
         }
 
         public static void RandomUpdate(this World world, Random rand)

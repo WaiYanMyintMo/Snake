@@ -13,10 +13,11 @@ namespace Snake
     {
         public static Direction? ConsoleKeyToDirection(this ConsoleKey consoleKey) => consoleKey switch
         {
-            var x when x == UpArrow || x == W => Up,
-            var x when x == LeftArrow || x == A => Left,
-            var x when x == DownArrow || x == S => Down,
-            var x when x == RightArrow || x == D => Right,
+            // C# 9, use "or" pattern matching
+            var x when x is LeftArrow || x is A => Left,
+            var x when x is UpArrow || x is W => Up,
+            var x when x is DownArrow || x is S => Down,
+            var x when x is RightArrow || x is D => Right,
             _ => null,
         };
 

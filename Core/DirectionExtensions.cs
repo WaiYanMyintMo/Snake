@@ -11,7 +11,7 @@ namespace Core
             Down => Up,
             Left => Right,
             Right => Left,
-            _ => throw new ArgumentException($"{nameof(direction)} arg's value {direction} is invalid")
+            _ => throw new ArgumentException($"{nameof(direction)} arg's value {direction} is invalid"),
         };
     }
 }
