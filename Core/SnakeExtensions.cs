@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
@@ -7,13 +6,13 @@ namespace Core
 {
     public static class SnakeExtensions
     {
-        public static List<Point> EnsureWithin(this List<Point> points, Point size)
+        public static List<Point> EnsuredWithin(this List<Point> points, Point size)
         {
             Contract.Requires(!(points is null));
 
             for (int i = 0; i < points.Count; i++)
             {
-                points[i] = points[i].EnsureWithin(size);
+                points[i] = points[i].EnsuredWithin(size);
             }
             return points;
         }

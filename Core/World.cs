@@ -15,9 +15,9 @@ namespace Core
         {
             Size = size;
 
-            var center = size.GetCenter().EnsureWithin(size);
+            var center = size.GetCenter().EnsuredWithin(size);
 
-            Apple = new Point(center.X + 1, center.Y + 1).EnsureWithin(size);
+            Apple = new Point(center.X + 1, center.Y + 1).EnsuredWithin(size);
 
             Snake = new List<Point>() { center };
         }
@@ -25,8 +25,8 @@ namespace Core
         public World(Point size, Point apple, List<Point> snake)
         {
             Size = size;
-            Apple = apple.EnsureWithin(size);
-            Snake = snake.EnsureWithin(size);
+            Apple = apple.EnsuredWithin(size);
+            Snake = snake.EnsuredWithin(size);
         }
 
         public Point Size { get; }

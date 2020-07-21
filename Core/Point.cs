@@ -38,8 +38,10 @@ namespace Core
 
         public static Point ToPoint((int, int) tuple) => new Point(tuple.Item1, tuple.Item2);
 
-        public static implicit operator (int, int)(Point point) => ToValueTuple(point);
+        public static implicit operator (int x, int y)(Point point) => ToValueTuple(point);
 
-        public static (int, int) ToValueTuple(Point c) => (c.X, c.Y);
+        public static (int x, int y) ToValueTuple(Point c) => (c.X, c.Y);
+
+        public static implicit operator Point(Direction direction) => direction.ToPoint();
     }
 }
