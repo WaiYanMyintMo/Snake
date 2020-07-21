@@ -35,7 +35,7 @@ namespace Core
 
         public List<Point> Snake { get; }
         
-        public void Update(Direction direction)
+        public WorldState Update(Direction direction)
         {
             var tailEnd = Snake.GetTailEnd();
 
@@ -43,7 +43,7 @@ namespace Core
 
             if (Snake.IsInvalidState(Size))
             {
-                throw new Exception("Game over");
+                return WorldState.Invalid;
             }
 
             if (Snake.GetHead() == Apple)
@@ -71,6 +71,8 @@ namespace Core
                 } while (Snake.Contains(Apple));
 
             }
+
+            return WorldState.Running;
 
         }
     }

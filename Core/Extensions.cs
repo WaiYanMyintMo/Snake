@@ -10,6 +10,8 @@
 
         public static int EnsuredWithin(this int num, int higherBoundExclusive) => num.EnsuredWithin(0, higherBoundExclusive);
 
+        public static int EnsuredWithin(this int num) => num.EnsuredWithin(0, num + 1);
+
         public static bool IsWithin(this int num, int lowerBoundInclusive, int higherBoundExclusive)
             => num >= lowerBoundInclusive && num < higherBoundExclusive;
 

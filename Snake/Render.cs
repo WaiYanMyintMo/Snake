@@ -14,7 +14,7 @@ namespace Snake
             this.world = world;
             size = this.world.Size;
 
-            sb = new StringBuilder(size.X * size.Y);
+            sb = new StringBuilder((size.X * size.Y) + size.Y);
             buffer = GetEmptyBuffer(size);
 
             InitializeConsole(world);
@@ -34,13 +34,14 @@ namespace Snake
             var width = size.X;
             var height = size.Y;
 
+            // TODO: implement console buffer / padding / margin
+
             if (width > LargestWindowWidth || height > LargestWindowHeight)
             {
                 throw new Exception("World size too large to render");
             }
 
-            SetWindowSize(WindowWidth, height);
-            SetWindowSize(width, WindowHeight);
+            SetWindowSize(width, height);
         }
 
         private static char[][] GetEmptyBuffer(Point size)
@@ -100,7 +101,10 @@ namespace Snake
             for (int i = 0; i < size.Y; i++)
             {
                 sb.Append(buffer[i]);
-                sb.Append(Environment.NewLine);
+                if (i != size.Y - 1)
+                {
+                    sb.Append(Environment.NewLine);
+                }
             }
         }
 

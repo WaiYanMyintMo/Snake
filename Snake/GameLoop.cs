@@ -31,13 +31,17 @@ namespace Snake
         {
             currentDirection = Input.ForceGetDirection();
 
-            while (true)
+            var worldState = WorldState.Running;
+
+            while (worldState is WorldState.Running)
             {
+                render.Draw();
                 // Starts a task that waits for some time and then run
                 var updateAndDrawTask = UpdateAndDrawAsync();
 
                 // in that time, we check for input (blocking)
 
+                // Change next direction if not timeout, or if key is valid
                 while (!updateAndDrawTask.IsCompleted)
                 {
                     if (Console.KeyAvailable)
@@ -55,21 +59,36 @@ namespace Snake
                     }
                 }
 
-                // Change next direction if not timeout, or if key is valid
-
+                worldState = updateAndDrawTask.Result;
             }
+            
+            var center = world.Size.GetCenter();
+
+            var sb = new StringBuilder();
+
+            if (worldState is WorldState.Invalid)
+            {
+                sb.Append(" Game over. ");
+            }
+            else if (worldState is WorldState.Won)
+            {
+                sb.Append(" Congratulations. You won the game. ");
+            }
+            sb.Append($" Your score was {world.Snake.Count}. ");
+
+            Console.SetCursorPosition((center.X - (sb.Length / 2)).EnsuredWithin(), center.Y);
+            Console.Write(sb);
         }
 
-        private async Task UpdateAndDrawAsync()
+        private async Task<WorldState> UpdateAndDrawAsync()
         {
             await Task.Delay(MILLISECOND_PER_UPDATE).ConfigureAwait(false);
-            UpdateAndDraw();
+            return UpdateAndDraw();
         }
 
-        private void UpdateAndDraw()
+        private WorldState UpdateAndDraw()
         {
-            world.Update(currentDirection);
-            render.Draw();
+            return world.Update(currentDirection);
         }
     }
 }
