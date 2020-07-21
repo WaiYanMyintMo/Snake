@@ -92,6 +92,11 @@ namespace Snake
             {
                 buffer[body.Y][body.X] = 'S';
             }
+
+            if (buffer[head.Y][head.X] == 'S')
+            {
+                buffer[head.Y][head.X] = 'X';
+            }
         }
 
         private void PrepareStringBuilderFromBuffer()
@@ -115,6 +120,31 @@ namespace Snake
 
             SetCursorPosition(0, 0);
             Write(sb);
+        }
+
+        public void DisplayGameEnd(WorldState worldState)
+        {
+            var center = world.Size.GetCenter();
+
+            var sb = new StringBuilder();
+
+            if (worldState is WorldState.Invalid)
+            {
+                sb.Append(" Game over. ");
+            }
+            else if (worldState is WorldState.Won)
+            {
+                sb.Append(" Congratulations. You won the game. ");
+            }
+            sb.Append($" Your score was {world.Snake.Count}. ");
+
+            SetWindowSize(WindowWidth, (WindowHeight + 2).EnsuredWithin(LargestWindowHeight));
+            SetCursorPosition((center.X - (sb.Length / 2)).EnsuredWithin(), WindowHeight - 1);
+            Write(sb);
+
+            SetCursorPosition(0, WindowHeight);
+            Write("Press enter to exit...");
+            ReadLine();
         }
     }
 }

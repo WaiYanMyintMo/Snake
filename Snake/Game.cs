@@ -10,10 +10,10 @@ namespace Snake
 {
     public static class Game
     {
-        public static void Run()
+        public static void Run(int millisecondsPerUpdate)
         {
             var world = new World();
-            var gameLoop = new GameLoop(world);
+            var gameLoop = new GameLoop(world, millisecondsPerUpdate);
             gameLoop.Start();
         }
 
