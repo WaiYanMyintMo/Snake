@@ -30,5 +30,10 @@ namespace Core
 
         public static bool IsWithin(this Point point, Point size) 
             => point.X.IsWithin(size.X) && point.Y.IsWithin(size.Y);
+
+        public static void xyz(this Point point)
+        {
+            (int x, int y) = ((int, int))point;
+        }
     }
 }
