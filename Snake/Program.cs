@@ -15,7 +15,6 @@ namespace Snake
 
             if (result.Tag is ParserResultType.NotParsed)
             {
-                Console.Write("hi");
             }
             else
             {

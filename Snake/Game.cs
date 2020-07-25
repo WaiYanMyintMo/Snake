@@ -19,6 +19,8 @@ namespace Snake
                 {
                     RandomSeed = options.RandomSeed,
                     Size = (options.X, options.Y),
+                    AppleX = options.AppleX,
+                    AppleY = options.AppleY,
                 });
 
             var gameLoop = new GameLoop(world, options.MillisecondsPerUpdate);

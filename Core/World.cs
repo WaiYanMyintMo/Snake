@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Core
@@ -23,7 +22,7 @@ namespace Core
 
             var center = Size.GetCenter().EnsuredWithin(Size);
 
-            Apple = new Point(center.X + 1, center.Y + 1).EnsuredWithin(Size);
+            Apple = (options.Apple ?? new Point(options.AppleX ?? center.X + 1, options.AppleY ?? center.Y + 1)).EnsuredWithin(Size);
 
             Snake = ( options.Snake ?? new List<Point>() { center } ).EnsuredWithin(Size);
 

@@ -21,5 +21,11 @@ namespace Snake
 
         [Option('y', "y-length", Required = false, HelpText = "Y coordinate length of world")]
         public int Y { get; set; } = 20;
+
+        [Option("apple-x", Required = false, HelpText = "X coordinate of starting apple spawn point")]
+        public int? AppleX { get; set; } = null;
+
+        [Option("apple-y", Required = false, HelpText = "Y coordinate of starting apple spawn point")]
+        public int? AppleY { get; set; } = null;
     }
 }
