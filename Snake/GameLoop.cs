@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,13 +27,17 @@ namespace Snake
 
         private readonly TimeSpan timespanPerUpdate;
 
-        private Direction currentDirection;
+        private readonly Queue<Direction> currentDirectionBuffer = new Queue<Direction>();
+
+        private Direction lastUsedDirection;
+
+        private Direction lastQueuedDirection;
 
         public void Start()
         {
             render.Draw();
 
-            currentDirection = DirectionInput.ForceGetDirection();
+            currentDirectionBuffer.Enqueue(lastUsedDirection = DirectionInput.ForceGetDirection());
 
             var worldState = WorldState.Running;
 
@@ -46,7 +51,7 @@ namespace Snake
                 // in that time, we check for input (blocking)
 
                 // Change next direction if not timeout, or if key is valid
-                var newDirection = currentDirection;
+
                 while (!waitTask.IsCompleted)
                 {
                     if (Console.KeyAvailable)
@@ -56,16 +61,21 @@ namespace Snake
                         {
                             var direction = (Direction)nullableDirection;
                             // So that you don't turn backwards
-                            if (direction.Opposite() != currentDirection)
+                            if (direction.Opposite() != lastQueuedDirection)
                             {
-                                newDirection = direction;
+                                currentDirectionBuffer.Enqueue(lastQueuedDirection = direction);
                             }
                         }
                     }
                 }
 
-                currentDirection = newDirection;
-                worldState = world.Update(currentDirection);
+
+                if (currentDirectionBuffer.Count > 0)
+                {
+                    lastUsedDirection = currentDirectionBuffer.Dequeue();
+                }
+
+                worldState = world.Update(lastUsedDirection);
             }
 
             try
