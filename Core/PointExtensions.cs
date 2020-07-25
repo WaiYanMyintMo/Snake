@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Core
 {
@@ -12,7 +14,25 @@ namespace Core
 
         public static Point Add(this Point point1, Point point2) => new Point(point1.X + point2.X, point1.Y + point2.Y);
 
-        public static Point GetCenter(this Point point) => new Point(point.X / 2, point.Y / 2);
+        public static Point Difference(this Point point1, Point point2) => Add(point1, point2.Negative());
+
+        public static Point Both(this Point point, Func<int, int> func)
+        {
+            Contract.Assert(!(func is null));
+            return (func.Invoke(point.X), func.Invoke(point.Y));
+        }
+
+        public static Point Negative(this Point point) => point.Both((x) => -x);
+
+        public static int Distance(this Point point1, Point point2)
+        {
+            var difference = point1.Difference(point2);
+            return Math.Abs(difference.X) + Math.Abs(difference.Y);
+        }
+
+        public static int Distance(this Point point) => point.Distance(Point.Origin);
+
+        public static Point GetCenter(this Point point) => point.Both((x) => x / 2);
 
         public static Point EnsuredWithin(this Point point, Point size)
             => new Point(point.X.EnsuredWithin(size.X), point.Y.EnsuredWithin(size.Y));
@@ -28,5 +48,23 @@ namespace Core
             Direction.Right => (1, 0),
             _ => throw new ArgumentException($"{nameof(direction)} arg's value {direction} is invalid"),
         };
+
+        public static IEnumerable<Point> Range(this Point exclusiveUpperBound) => Range(Point.Origin, exclusiveUpperBound);
+
+        public static IEnumerable<Point> Range(this Point inclusiveLowerBound, Point exclusiveUpperBound)
+        {
+            var diff = exclusiveUpperBound.Difference(inclusiveLowerBound);
+            if (diff.X <= 0 || diff.Y <= 0)
+            {
+                throw new ArgumentException($"{nameof(exclusiveUpperBound)} cannot be smaller than {nameof(inclusiveLowerBound)}");
+            }
+            for (int y = inclusiveLowerBound.Y; y < exclusiveUpperBound.Y; y++)
+            {
+                for (int x = inclusiveLowerBound.X; x < exclusiveUpperBound.X; x++)
+                {
+                    yield return (x, y);
+                }
+            }
+        }
     }
 }

@@ -24,6 +24,10 @@ namespace Snake
 
         private readonly Point size;
 
+        private static int windowWidthOld;
+
+        private static int windowHeightOld;
+
         public static void InitializeConsole(World world)
         {
             Title = "Snake";
@@ -41,7 +45,17 @@ namespace Snake
                 throw new Exception("World size too large to render");
             }
 
+            windowWidthOld = WindowWidth;
+            windowHeightOld = WindowHeight;
+
+            Clear();
+
             SetWindowSize(width, height);
+        }
+
+        public static void CleanupConsole()
+        {
+            SetWindowSize(windowWidthOld, windowHeightOld);
         }
 
         private static char[][] GetEmptyBuffer(Point size)
@@ -130,17 +144,17 @@ namespace Snake
 
             if (worldState is WorldState.Invalid)
             {
-                sb.Append(" Game over. ");
+                sb.Append(" Game over.");
             }
             else if (worldState is WorldState.Won)
             {
-                sb.Append(" Congratulations. You won the game. ");
+                sb.Append(" Congratulations, you won.");
             }
-            sb.Append($" Your score was {world.Snake.Count}. ");
+            sb.Append($" Your score was {world.Snake.Count}.");
 
             SetWindowSize(WindowWidth, (WindowHeight + 2).EnsuredWithin(LargestWindowHeight));
             SetCursorPosition((center.X - (sb.Length / 2)).EnsuredWithin(), WindowHeight - 2);
-            Write(sb);
+            WriteLine(sb);
 
             SetCursorPosition(0, WindowHeight - 1);
         }

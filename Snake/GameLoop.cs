@@ -75,6 +75,8 @@ namespace Snake
             catch (IndexOutOfRangeException) { }
 
             render.DisplayGameEnd(worldState);
+
+            Render.CleanupConsole();
         }
     }
 }
