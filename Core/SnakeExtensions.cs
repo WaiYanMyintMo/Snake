@@ -9,8 +9,8 @@ namespace Core
         public static List<Point> EnsuredWithin(this List<Point> points, Point size)
         {
             Contract.Requires(!(points is null));
-
-            for (int i = 0; i < points.Count; i++)
+            
+            for (int i = 0; i < points!.Count; i++)
             {
                 points[i] = points[i].EnsuredWithin(size);
             }
@@ -21,7 +21,7 @@ namespace Core
         {
             Contract.Requires(!(points is null));
 
-            foreach (var point in points)
+            foreach (var point in points!)
             {
                 if (!point.IsWithin(size))
                 {
@@ -42,8 +42,8 @@ namespace Core
 
             Contract.Requires(!(points is null));
 
-            var movedHead = points.GetHead().Add(vector);
-            var movedBodyToTailEnd = points.GetRange(0, points.Count - 1);
+            var movedHead = points!.GetHead().Add(vector);
+            var movedBodyToTailEnd = points!.GetRange(0, points.Count - 1);
 
             var newPoints = new List<Point>() { movedHead };
             newPoints.AddRange(movedBodyToTailEnd);
@@ -57,9 +57,9 @@ namespace Core
         {
             Contract.Requires(!(points is null));
 
-            var newPoints = points.WithMovement(vector);
+            var newPoints = points!.WithMovement(vector);
 
-            points.Clear();
+            points!.Clear();
             points.AddRange(newPoints);
         }
 
@@ -75,7 +75,7 @@ namespace Core
             // https://stackoverflow.com/a/14363597
 
             var hashset = new HashSet<Point>();
-            foreach (var block in points)
+            foreach (var block in points!)
             {
                 if (!hashset.Add(block))
                 {
