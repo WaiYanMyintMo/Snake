@@ -11,12 +11,12 @@ namespace Snake
 {
     public class GameLoop
     {
-        public GameLoop(World world, int millisecondsPerUpdate)
+        public GameLoop(World world, double millisecondsPerUpdate)
         {
             Contract.Requires(!(world is null));
 
             this.world = world;
-            this.millisecondsPerUpdate = millisecondsPerUpdate;
+            timespanPerUpdate = TimeSpan.FromMilliseconds(millisecondsPerUpdate);
             render = new Render(world);
         }
 
@@ -24,7 +24,7 @@ namespace Snake
 
         private readonly Render render;
 
-        private readonly int millisecondsPerUpdate;
+        private readonly TimeSpan timespanPerUpdate;
 
         private Direction currentDirection;
 
@@ -32,7 +32,7 @@ namespace Snake
         {
             render.Draw();
 
-            currentDirection = Input.ForceGetDirection();
+            currentDirection = DirectionInput.ForceGetDirection();
 
             var worldState = WorldState.Running;
 
@@ -40,7 +40,8 @@ namespace Snake
             {
                 Task.Run(() => render.Draw());
                 // Starts a task that waits for some time
-                var waitTask = Task.Run(() => Task.Delay(millisecondsPerUpdate));
+
+                var waitTask = Task.Run(() => Task.Delay(timespanPerUpdate));
 
                 // in that time, we check for input (blocking)
 
@@ -50,7 +51,7 @@ namespace Snake
                 {
                     if (Console.KeyAvailable)
                     {
-                        var nullableDirection = Input.GetDirection();
+                        var nullableDirection = DirectionInput.GetDirection();
                         if (!(nullableDirection is null))
                         {
                             var direction = (Direction)nullableDirection;

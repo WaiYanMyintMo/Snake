@@ -1,5 +1,5 @@
-﻿using System;
-using Core;
+﻿using CommandLine;
+using System;
 
 namespace Snake
 {
@@ -7,15 +7,20 @@ namespace Snake
     {
         static void Main(params string[] args)
         {
-            if (args.Length == 1)
+            var options = new Options();
+
+            var result = Parser.Default
+                .ParseArguments<Options>(args)
+                .WithParsed(o => options = o);
+
+            if (result.Tag is ParserResultType.NotParsed)
             {
-                Game.Run(int.Parse(args[0]));
+                Console.Write("hi");
             }
             else
             {
-                Game.Run(150);
+                Game.Run(options);
             }
         }
-
     }
 }

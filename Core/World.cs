@@ -1,33 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Core
 {
     public class World
     {
-        private readonly Random rand = new Random();
-        public World() : this((50, 20))
+        public World() : this(new Options())
         {
         }
 
-        public World(Point size)
+        // Fix this non-dry stuff
+        public World(Options options)
         {
-            Size = size;
+            if (options is null)
+            {
+                throw new ArgumentException($"{nameof(options)} cannot be null");
+            }
 
-            var center = size.GetCenter().EnsuredWithin(size);
+            Size = options.Size;
 
-            Apple = new Point(center.X + 1, center.Y + 1).EnsuredWithin(size);
+            var center = Size.GetCenter().EnsuredWithin(Size);
 
-            Snake = new List<Point>() { center };
+            Apple = new Point(center.X + 1, center.Y + 1).EnsuredWithin(Size);
+
+            Snake = ( options.Snake ?? new List<Point>() { center } ).EnsuredWithin(Size);
+
+            RandomSeed = options.RandomSeed ?? new Random().Next();
+
+            rand = new Random(RandomSeed);
         }
 
-        public World(Point size, Point apple, List<Point> snake)
-        {
-            Size = size;
-            Apple = apple.EnsuredWithin(size);
-            Snake = snake.EnsuredWithin(size);
-        }
+        public int RandomSeed { get; }
+
+        private readonly Random rand;
 
         public Point Size { get; }
 

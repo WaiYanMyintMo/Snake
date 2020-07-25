@@ -143,8 +143,6 @@ namespace Snake
             Write(sb);
 
             SetCursorPosition(0, WindowHeight - 1);
-            Write("Press enter to exit...");
-            ReadLine();
         }
     }
 }

@@ -1,15 +1,12 @@
 ﻿using Core;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using static System.Console;
 using static System.ConsoleKey;
 using static Core.Direction;
-using System.Threading.Tasks;
 
 namespace Snake
 {
-    public static class Input
+    public static class DirectionInput
     {
         public static Direction? ConsoleKeyToDirection(this ConsoleKey consoleKey) => consoleKey switch
         {
@@ -32,22 +29,6 @@ namespace Snake
             }
 
             return (Direction)inputDirection;
-        }
-
-        public static async Task<Direction?> GetDirectionAsync()
-        {
-            var task = Task.Run(() => GetDirection());
-            return await task;
-            /*
-            if (task.Wait(TimeSpan.FromMilliseconds(MILLISECOND_PER_UPDATE)) && !(task.Result is null))
-            {
-                NextDirection = (Direction)task.Result;
-            }
-            else
-            {
-                task.
-                }
-            */
         }
     }
 }

@@ -10,11 +10,29 @@ namespace Snake
 {
     public static class Game
     {
-        public static void Run(int millisecondsPerUpdate)
+        public static void Run(Options options)
         {
-            var world = new World();
-            var gameLoop = new GameLoop(world, millisecondsPerUpdate);
+            Contract.Requires(!(options is null));
+
+            var world = new World(
+                new Core.Options
+                {
+                    RandomSeed = options.RandomSeed,
+                    Size = (options.X, options.Y),
+                });
+
+            var gameLoop = new GameLoop(world, options.MillisecondsPerUpdate);
             gameLoop.Start();
+
+            Console.Write("Press enter to exit...");
+
+            if (options.Verbose)
+            {
+                Console.WriteLine();
+                Console.Write($"Verbose mode set: RandomSeed used is {world.RandomSeed}");
+            }
+
+            Console.ReadLine();
         }
 
         public static void RunRandom()
