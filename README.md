@@ -3,7 +3,7 @@
 Written in .NET Core 3.1
 
 ## Quick Start Guide
-Valid keys are arrow keys ← ↑ → ↓ or WASD. The inputs are queued.
+Valid keys are arrow keys ← ↑ → ↓ or WASD. The inputs are queued (you can delete queue by pressing 'C')
 
 The console will wait until you press one of these.
 
@@ -15,7 +15,11 @@ You snake will warp around the edges by default.
 
 When game is over, you will see your snake's length.
 
-You may pass command line parameters / change source code config to control various configurations. 
+You may pass command line parameters / change source code config to control various configurations.
+Use --help for more info.
+
+The default game world size is your max possible console / terminal size. Full-screen may cause flickers.
+Set verbose mode to get relevant information, after game is over. Recommended world size is (50, 20).
 
 ## Quick Project Explanation
 Split into "Core" class library that has the world class.
