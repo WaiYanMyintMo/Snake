@@ -18,7 +18,7 @@ namespace Snake
             _ => null,
         };
 
-        public static Direction? GetDirection() => ReadKey(false).Key.ConsoleKeyToDirection();
+        public static Direction? GetDirection() => ReadKey(true).Key.ConsoleKeyToDirection();
 
         public static Direction ForceGetDirection()
         {
