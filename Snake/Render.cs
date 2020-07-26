@@ -30,32 +30,39 @@ namespace Snake
 
         public static void InitializeConsole(World world)
         {
-            Title = "Snake";
-            CursorVisible = false;
-
-            var size = world.Size;
-
-            var width = size.X;
-            var height = size.Y;
-
-            // TODO: implement console buffer / padding / margin
-
-            if (width > LargestWindowWidth || height > LargestWindowHeight)
+            try
             {
-                throw new Exception("World size too large to render");
-            }
+                Title = "Snake";
+                CursorVisible = false;
 
-            windowWidthOld = WindowWidth;
-            windowHeightOld = WindowHeight;
+                var size = world.Size;
+
+                var width = size.X;
+                var height = size.Y;
+
+                // TODO: implement console buffer / padding / margin
+
+                if (width > LargestWindowWidth || height > LargestWindowHeight)
+                {
+                    throw new Exception("World size too large to render");
+                }
+
+                windowWidthOld = WindowWidth;
+                windowHeightOld = WindowHeight;
+
+
+                SetWindowSize(width, height);
+            } catch (PlatformNotSupportedException) { }
 
             Clear();
-
-            SetWindowSize(width, height);
         }
 
         public static void CleanupConsole()
         {
-            SetWindowSize(windowWidthOld, windowHeightOld);
+            try
+            {
+                SetWindowSize(windowWidthOld, windowHeightOld);
+            } catch (PlatformNotSupportedException) { }
         }
 
         private static char[][] GetEmptyBuffer(Point size)
@@ -152,8 +159,12 @@ namespace Snake
             }
             sb.Append($" Your score was {world.Snake.Count}.");
 
-            SetWindowSize(WindowWidth, (WindowHeight + 2).EnsuredWithin(LargestWindowHeight));
+            try
+            {
+                SetWindowSize(WindowWidth, (WindowHeight + 2).EnsuredWithin(LargestWindowHeight));
+            } catch (PlatformNotSupportedException) { }
             SetCursorPosition((center.X - (sb.Length / 2)).EnsuredWithin(), WindowHeight - 2);
+
             WriteLine(sb);
 
             SetCursorPosition(0, WindowHeight - 1);
