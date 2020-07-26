@@ -37,6 +37,9 @@ namespace Snake
         {
             render.Draw();
 
+            Console.SetCursorPosition(0, 0);
+            Console.Write("Press any input keys (WASD, ArrowKeys) to start...");
+
             currentDirectionBuffer.Enqueue(lastUsedDirection = DirectionInput.ForceGetDirection());
 
             var worldState = WorldState.Running;

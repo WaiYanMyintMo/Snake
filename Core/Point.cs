@@ -50,6 +50,8 @@ namespace Core
 
         public int CompareTo(Point other, Point reference) => this.Distance(reference).CompareTo(other.Distance(reference));
 
+        public override string ToString() => $"({X},{Y})";
+
         public static bool operator <(Point point1, Point point2) => point1.CompareTo(point2) < 0;
 
         public static bool operator <=(Point point1, Point point2) => point1.CompareTo(point2) <= 0;
