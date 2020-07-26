@@ -15,7 +15,7 @@ You snake will warp around the edges by default.
 You may pass command line parameters / change source code config to control various configurations.  
 Use --help for more info.
 
-The default game world size is current console size. Full-screen may cause flickers.  
+The default game world size is current console size and will use max size if not supported. Full-screen may cause flickers.  
 Set verbose mode to get relevant information, after game is over.
 
 ## Quick Project Explanation
