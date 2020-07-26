@@ -14,11 +14,14 @@ namespace Snake
         {
             Contract.Requires(!(options is null));
 
+            var x = options.X ?? Console.LargestWindowWidth;
+            var y = options.Y ?? Console.LargestWindowHeight;
+
             var world = new World(
                 new Core.Options
                 {
                     RandomSeed = options.RandomSeed,
-                    Size = (options.X, options.Y),
+                    Size = (x, y),
                     AppleX = options.AppleX,
                     AppleY = options.AppleY,
                     WarpAroundEdges = (bool)options.WarpAroundEdges

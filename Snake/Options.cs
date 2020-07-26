@@ -17,10 +17,10 @@ namespace Snake
         public int? RandomSeed { get; set; } = null;
 
         [Option('x', "x-length", Required = false, HelpText = "X coordinate length of world")]
-        public int X { get; set; } = 50;
+        public int? X { get; set; } = null;
 
         [Option('y', "y-length", Required = false, HelpText = "Y coordinate length of world")]
-        public int Y { get; set; } = 20;
+        public int? Y { get; set; } = null;
 
         [Option("apple-x", Required = false, HelpText = "X coordinate of starting apple spawn point")]
         public int? AppleX { get; set; } = null;
