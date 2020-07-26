@@ -9,6 +9,10 @@ The console will wait until you press one of these.
 
 You win when the entire screen is filled with snake.
 
+You grow by eating apples, denoted as 'a'. You snake head will be marked with 'H' 
+and the rest of the body will be marked as 'S'.
+You snake will warp around the edges by default.
+
 When game is over, you will see your snake's length.
 
 You may pass command line parameters / change source code config to control various configurations. 
@@ -24,7 +28,6 @@ Both have configurable Options class. The rest you may read the code / ask me th
 * Smooth inputs
   * Inputs are queued.
   * WASD and ArrowKey boths are supported
-  * Will have a mono-game version available soon.
 * Amazing configuration
   * (Almost)Every defaults are changable using command line options or source code, powered by CommandLineParser.
     If there is one you want to change, feel free to send a pull request.
@@ -48,6 +51,5 @@ Both have configurable Options class. The rest you may read the code / ask me th
 
 ## Known Bugs (features?)
 * Only starting snake location can't be controlled as of now using config
-* Warping not implemented yet, wall will kill
 
 Thank you for trying this out.
