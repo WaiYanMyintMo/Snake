@@ -56,7 +56,7 @@ namespace Core
                 for (int i = 0; i < Snake.Count; i++)
                 {
                     var body = Snake[i];
-                    Snake[i] = (body.X % Size.X, body.Y % Size.Y);
+                    Snake[i] = ((Size.X + body.X) % Size.X, (Size.Y + body.Y) % Size.Y);
                 }
             }
 
