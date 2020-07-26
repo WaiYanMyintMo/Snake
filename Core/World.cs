@@ -29,6 +29,8 @@ namespace Core
             RandomSeed = options.RandomSeed ?? new Random().Next();
 
             rand = new Random(RandomSeed);
+
+            this.options = options;
         }
 
         public int RandomSeed { get; }
@@ -40,12 +42,23 @@ namespace Core
         public Point Apple { get; private set; }
 
         public List<Point> Snake { get; }
+
+        private Options options;
         
         public WorldState Update(Direction direction)
         {
             var tailEnd = Snake.GetTailEnd();
 
             Snake.Move(direction);
+
+            if (options.WarpAroundEdges)
+            {
+                for (int i = 0; i < Snake.Count; i++)
+                {
+                    var body = Snake[i];
+                    Snake[i] = (body.X % Size.X, body.Y % Size.Y);
+                }
+            }
 
             if (Snake.IsInvalidState(Size))
             {

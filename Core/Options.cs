@@ -20,5 +20,7 @@ namespace Core
 #pragma warning disable CA2227 // Collection properties should be read only
         public List<Point>? Snake { get; set; } = null;
 #pragma warning restore CA2227 // Collection properties should be read only
+
+        public bool WarpAroundEdges { get; set; } = true;
     }
 }

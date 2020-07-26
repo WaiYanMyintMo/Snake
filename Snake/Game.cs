@@ -21,6 +21,7 @@ namespace Snake
                     Size = (options.X, options.Y),
                     AppleX = options.AppleX,
                     AppleY = options.AppleY,
+                    WarpAroundEdges = (bool)options.WarpAroundEdges
                 });
 
             var gameLoop = new GameLoop(world, options.MillisecondsPerUpdate);
@@ -28,7 +29,7 @@ namespace Snake
 
             Console.Write("Press enter to exit...");
 
-            if (options.Verbose)
+            if ((bool)options.Verbose)
             {
                 Console.WriteLine();
                 Console.Write($"Verbose mode set: RandomSeed used is {world.RandomSeed}");

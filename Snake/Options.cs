@@ -8,7 +8,7 @@ namespace Snake
     public class Options
     {
         [Option('v', "verbose", Required = false, HelpText = "Generate extra details at end of program")]
-        public bool Verbose { get; set; } = false;
+        public bool? Verbose { get; set; } = false;
 
         [Option('t', "time", Required = false, HelpText = "Timespan per update in milliseconds (double)")]
         public double MillisecondsPerUpdate { get; set; } = 150.0;
@@ -27,5 +27,8 @@ namespace Snake
 
         [Option("apple-y", Required = false, HelpText = "Y coordinate of starting apple spawn point")]
         public int? AppleY { get; set; } = null;
+
+        [Option('w', "warp-around-edges", Required = false, HelpText = "Warp around edges")]
+        public bool? WarpAroundEdges { get; set; } = true;
     }
 }
