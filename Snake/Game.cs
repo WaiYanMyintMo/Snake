@@ -35,7 +35,10 @@ namespace Snake
             if ((bool)options.Verbose)
             {
                 Console.WriteLine();
-                Console.Write($"Verbose mode set: RandomSeed used is {world.RandomSeed}");
+                Console.Write("Verbose set:");
+                Console.Write($"RandomSeed:{world.RandomSeed}");
+                Console.Write($"Max Width/Height:{Console.LargestWindowWidth},{Console.LargestWindowHeight}");
+                Console.Write($"Current Width/Height:{Console.WindowWidth},{Console.WindowHeight}");
             }
 
             Console.ReadLine();
