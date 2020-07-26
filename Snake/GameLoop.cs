@@ -61,7 +61,7 @@ namespace Snake
                         {
                             var direction = (Direction)nullableDirection;
                             // So that you don't turn backwards
-                            if (direction.Opposite() != lastQueuedDirection)
+                            if (direction != lastQueuedDirection && direction.Opposite() != lastQueuedDirection)
                             {
                                 currentDirectionBuffer.Enqueue(lastQueuedDirection = direction);
                             }
