@@ -59,14 +59,23 @@ namespace Snake
                 {
                     if (Console.KeyAvailable)
                     {
-                        var nullableDirection = DirectionInput.GetDirection();
-                        if (!(nullableDirection is null))
+                        var consoleKey = Console.ReadKey(true).Key;
+
+                        if (consoleKey is ConsoleKey.C)
                         {
-                            var direction = (Direction)nullableDirection;
-                            // So that you don't turn backwards
-                            if (direction != lastQueuedDirection && direction.Opposite() != lastQueuedDirection)
+                            currentDirectionBuffer.Clear();
+                        }
+                        else
+                        {
+                            var nullableDirection = consoleKey.ConsoleKeyToDirection();
+                            if (!(nullableDirection is null))
                             {
-                                currentDirectionBuffer.Enqueue(lastQueuedDirection = direction);
+                                var direction = (Direction)nullableDirection;
+                                // So that you don't turn backwards
+                                if (direction != lastQueuedDirection && direction.Opposite() != lastQueuedDirection)
+                                {
+                                    currentDirectionBuffer.Enqueue(lastQueuedDirection = direction);
+                                }
                             }
                         }
                     }
