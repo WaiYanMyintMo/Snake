@@ -30,33 +30,33 @@ namespace Snake
 
         public static void InitializeConsole(World world)
         {
+            var size = world.Size;
+
+            var width = size.X;
+            var height = size.Y;
+
+            if (size >= new Point(LargestWindowWidth, LargestWindowHeight))
+            {
+                Clear();
+                WriteLine($"You are running at max world size. Screen may flicker");
+                WriteLine($"  Potential solution: Try running in windowed mode instead of fullscreen");
+                WriteLine("To change world size, please consult \"--help\" command line option");
+                WriteLine("Set verbose mode to true for more info");
+                Write("Press any key to continue...");
+                ReadKey(true);
+            }
+
+            if (width > LargestWindowWidth || height > LargestWindowHeight)
+            {
+                throw new Exception("World size too large to render");
+            }
+
             try
             {
                 Title = "Snake";
                 CursorVisible = false;
 
-                var size = world.Size;
-
-                var width = size.X;
-                var height = size.Y;
-
                 // TODO: implement console buffer / padding / margin
-
-                if (size >= new Point(LargestWindowWidth, LargestWindowHeight))
-                {
-                    Clear();
-                    WriteLine($"You are running at max world size. Screen may flicker");
-                    WriteLine($"  Potential solution: Try running in windowed mode instead of fullscreen");
-                    WriteLine("To change world size, please consult \"--help\" command line option");
-                    WriteLine("Set verbose mode to true for more info");
-                    Write("Press any key to continue...");
-                    ReadKey(true);
-                }
-
-                if (width > LargestWindowWidth || height > LargestWindowHeight)
-                {
-                    throw new Exception("World size too large to render");
-                }
 
                 windowWidthOld = WindowWidth;
                 windowHeightOld = WindowHeight;

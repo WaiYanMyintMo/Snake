@@ -14,8 +14,12 @@ namespace Snake
         {
             Contract.Requires(!(options is null));
 
-            var x = options.X ?? Console.WindowWidth;
-            var y = options.Y ?? Console.WindowHeight;
+            bool platformSupported = false;
+            try { platformSupported = true; } 
+            catch (PlatformNotSupportedException) { };
+
+            var x = options.X ?? (platformSupported ? Console.WindowWidth : Console.LargestWindowWidth);
+            var y = options.Y ?? (platformSupported ? Console.WindowHeight : Console.LargestWindowHeight);
 
             var world = new World(
                 new Core.Options
