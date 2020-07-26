@@ -3,27 +3,23 @@
 Written in .NET Core 3.1
 
 ## Quick Start Guide
-Valid keys are arrow keys ← ↑ → ↓ or WASD. The inputs are queued (you can delete queue by pressing 'C')
-
-The console will wait until you press one of these.
-
-You win when the entire screen is filled with snake.
-
-You grow by eating apples, denoted as 'a'. You snake head will be marked with 'H' 
-and the rest of the body will be marked as 'S'.
-You snake will warp around the edges by default.
-
+Valid keys are arrow keys ← ↑ → ↓ or WASD. The inputs are queued (you can delete queue by pressing 'C')  
+You win when the entire screen is filled with snake.  
 When game is over, you will see your snake's length.
 
-You may pass command line parameters / change source code config to control various configurations.
+You grow by eating apples, denoted as 'a'. You snake head will be marked with 'H' 
+and the rest of the body will be marked as 'S'.  
+You snake will warp around the edges by default.  
+
+
+You may pass command line parameters / change source code config to control various configurations.  
 Use --help for more info.
 
-The default game world size is your max possible console / terminal size. Full-screen may cause flickers.
-Set verbose mode to get relevant information, after game is over. Recommended world size is (50, 20).
+The default game world size is current console size. Full-screen may cause flickers.  
+Set verbose mode to get relevant information, after game is over.
 
 ## Quick Project Explanation
-Split into "Core" class library that has the world class.
-
+Split into "Core" class library that has the world class.  
 And then the "Snake" console project, that deals with input + rendering + extra UI logic.
 
 Both have configurable Options class. The rest you may read the code / ask me through issues.
