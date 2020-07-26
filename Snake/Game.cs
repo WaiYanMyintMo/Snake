@@ -14,8 +14,8 @@ namespace Snake
         {
             Contract.Requires(!(options is null));
 
-            var x = options.X ?? Console.LargestWindowWidth;
-            var y = options.Y ?? Console.LargestWindowHeight;
+            var x = options.X ?? Console.WindowWidth;
+            var y = options.Y ?? Console.WindowHeight;
 
             var world = new World(
                 new Core.Options

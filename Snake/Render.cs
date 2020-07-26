@@ -42,25 +42,13 @@ namespace Snake
 
                 // TODO: implement console buffer / padding / margin
 
-                var maxNonFlicker = (100, 30);
-                var maxPerformance = (50, 20);
-
-                var nonFlicker = size > maxNonFlicker;
-                var performance = size > maxPerformance;
-
-                if (nonFlicker || performance)
+                if (size >= new Point(LargestWindowWidth, LargestWindowHeight))
                 {
-                    WriteLine($"Your world size: {size} is");
-                    if (nonFlicker)
-                    {
-                        WriteLine($"  more than {maxNonFlicker}. Screen may flicker");
-                        WriteLine($"    potential solution: try running in windowed mode instead of fullscreen");
-                    }
-                    if (performance)
-                    {
-                        WriteLine($"  more than {maxPerformance}. Your game may run slow");
-                    }
+                    Clear();
+                    WriteLine($"You are running at max world size. Screen may flicker");
+                    WriteLine($"  Potential solution: Try running in windowed mode instead of fullscreen");
                     WriteLine("To change world size, please consult \"--help\" command line option");
+                    WriteLine("Set verbose mode to true for more info");
                     Write("Press any key to continue...");
                     ReadKey(true);
                 }
